@@ -152,5 +152,4 @@ $(document).ready(function (){
         $('.modal').hide()
         $('.modal-backdrop').hide()
         $('.editEntryForm').hide()
-        closeTab()
     }
