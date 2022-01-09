@@ -24,8 +24,7 @@ python manage.py runserver
 - Create account and login
 
 # Specifications
-Framework: Django
-platform: Ubuntu 20.04
-database: sqlite
-annotate plugin: annotorious-2.4.0
-
+ - Framework: Django 
+ - platform: Ubuntu 20.04 
+ - database: sqlite 
+ - annotate plugin: annotorious-2.4.0
