@@ -1,0 +1,106 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}SmartCow Task | Annotate{% endblock %}
+{% block body %}
+{% load static %}
+{% csrf_token %}
+{% if image %}
+<div class="container-fluid" style="margin-bottom: 10px; display: flex;">
+    <h2>Annotate</h2>
+    <button class="btn btn-danger annotate-reset" style="width: 250px; margin-left: 10px;">Reset</button>
+</div>
+
+<div class="container-fluid" style="margin-bottom: 10px">
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            {{ image.file_name }}
+            <img id="img_anotate"  src="{{ image.file.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-bottom: 10px">
+    <button class="btn btn-success col-md-2 annotate-confirm">Confirm</button>
+</div>
+
+
+<script>
+    function createText() {
+        const annotations = anno.getAnnotations()
+        $.each(annotations, (index, annotation)=>{
+            var coordinates = annotation.target.selector.value.replace('xywh=pixel:', '').split(',')
+            var x_coor = parseFloat(coordinates[0])
+            var y_coor = parseFloat(coordinates[1])
+            var width = parseFloat(coordinates[2])
+            var height = parseFloat(coordinates[3])
+            var text_x_coor = x_coor + (width/2)
+            var text_y_coor = y_coor + (height/5)
+    
+            var newText = document.createElementNS('http://www.w3.org/2000/svg',"text");
+            newText.setAttributeNS(null,"x",text_x_coor);      
+            newText.setAttributeNS(null,"y",text_y_coor);   
+            newText.setAttributeNS(null,"style",'fill: #00ff00');   
+            var textNode = document.createTextNode(annotation.body[0].value);
+            newText.appendChild(textNode);
+            $("[data-id='"+annotation.id+"']").append(newText);
+        })
+    }
+
+
+    const config = {
+        image: 'img_anotate',
+        allowEmpty: true,
+        widgets: [
+            VehicleSelectorWidget,
+        ],
+        formatter: VehicleFormatter
+    }
+    
+    var anno = Annotorious.init(config);
+
+    anno.on('createAnnotation', function(annotation) {
+        createText()
+    });
+
+    anno.on('cancelSelected', function(selection) {
+        createText()
+    });
+
+    anno.on('updateAnnotation', function(annotation, previous) {
+        createText()
+    });
+    
+    $('.annotate-confirm').click(()=>{
+        const annotations = anno.getAnnotations()
+        $.ajax({
+            type: "POST",
+            url: '/save_annotation',
+            headers: {'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()},
+            data: {
+                'img_id': {{ image.pk }},
+                'annotations_json': JSON.stringify(annotations),
+            },
+            success: function(data) {
+                window.location.replace('/myannotated')
+            }
+        })
+    })
+
+
+    $('.annotate-reset').click(()=>{
+        anno.clearAnnotations()
+    })
+    {% if annotations %}
+    anno.setAnnotations({{annotations|safe}})
+    createText()
+
+    {% endif %}
+    
+</script>
+
+
+{% else %}
+no images
+{% endif %}
+
+
+{% endblock %}

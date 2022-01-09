@@ -1,0 +1,69 @@
+{% extends 'layouts/layout-fullscreen.html' %}
+{% block title %}SmartCow Task | Login{% endblock %}
+{% block body %}
+<div class="loginBody">
+    <form class="form-signin text-center" action="signin" method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="material-icons">&#xe0be;</i></div>
+            </div>
+            <input type="email" name="email" class="form-control" placeholder="Email address" autofocus required>
+        </div>
+        <div class="input-group form-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="material-icons">&#xe897;</i></div>
+            </div>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block loginButton form-group" type="submit">Login</button>
+        <p>Looking to <a href="#" data-toggle="modal" data-target=".regModal"><strong>create an account </strong></a>?</p>
+    </form>
+    <p class="mt-5 mb-3 text-muted" style="bottom:0;position:absolute;margin:0 auto;">created by Nicholas Hoo</p>
+
+    <div class="modal fade regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h5 class="modal-title regModalLabel">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="margin:0 auto;">
+                    <form class="text-center" style="margin:0px 0px 10px 0px" action="javascript:regSubmit();">
+                        <!-- <div class="form-group">
+                            <input class="form-control reg_first_name" placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control reg_last_name" placeholder="Last name">
+                        </div> -->
+                        <div class="form-group">
+                            <input type="email" class="form-control reg_email" placeholder="Email address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control reg_dob" required >
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control reg_password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control reg_password2" placeholder="Retype password" required>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loadingAnim" style="text-align:center;display:hidden;">
+        <div class="loadingAnimSub col-4">
+            {% load static %}
+            <img src="{% static 'img/loading.gif' %}"/>
+            <p>Please Wait</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

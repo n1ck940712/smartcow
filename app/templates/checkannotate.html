@@ -1,0 +1,109 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}SmartCow Task | Check Annotate{% endblock %}
+{% block body %}
+{% load static %}
+{% csrf_token %}
+{% if image %}
+<div class="container-fluid" style="margin-bottom: 10px">
+    <h2>Check Annotate or Download CSV</h2>
+    <hr class="">
+</div>
+
+<div class="container-fluid" style="margin-bottom: 10px">
+    <div class="row">
+        <div class="col-md-8">
+            {{ image.file_name }}
+            <img id="img_anotate"  src="{{ image.file.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-bottom: 10px">
+    <button class="btn btn-success col-md-2 download-csv">Download CSV</button>
+</div>
+
+
+<script>
+    function downloadFile(fileName, csv) {
+        if (navigator.userAgent.indexOf('MSIE') !== -1 ||
+            navigator.appVersion.indexOf('Trident/') > 0) {
+            var IEwindow = window.open("", "", "Width=0px; Height=0px");
+            IEwindow.document.write('sep=,\r\n' + csv);
+            IEwindow.document.close();
+            IEwindow.document.execCommand('SaveAs', true, fileName);
+            IEwindow.close();
+        } else {
+            var aLink = document.createElement('a');
+            var evt = document.createEvent("MouseEvents");
+            evt.initMouseEvent("click", true, true, window,
+                0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            aLink.download = fileName;
+            aLink.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(csv);
+            aLink.dispatchEvent(evt);
+        }
+    }
+
+    function createText() {
+        const annotations = anno.getAnnotations()
+        $.each(annotations, (index, annotation)=>{
+            var coordinates = annotation.target.selector.value.replace('xywh=pixel:', '').split(',')
+            var x_coor = parseFloat(coordinates[0])
+            var y_coor = parseFloat(coordinates[1])
+            var width = parseFloat(coordinates[2])
+            var height = parseFloat(coordinates[3])
+            var text_x_coor = x_coor + (width/2)
+            var text_y_coor = y_coor + (height/5)
+    
+            var newText = document.createElementNS('http://www.w3.org/2000/svg',"text");
+            newText.setAttributeNS(null,"x",text_x_coor);      
+            newText.setAttributeNS(null,"y",text_y_coor);   
+            newText.setAttributeNS(null,"style",'fill: #00ff00');   
+            var textNode = document.createTextNode(annotation.body[0].value);
+            newText.appendChild(textNode);
+            $("[data-id='"+annotation.id+"']").append(newText);
+        })
+    }
+
+    const config = {
+        image: 'img_anotate',
+        allowEmpty: true,
+        widgets: [
+            VehicleSelectorWidget,
+        ],
+        formatter: VehicleFormatter
+    }
+    
+    var anno = Annotorious.init(config);
+    anno.disableSelect = true
+    anno.disableEditor = true
+    anno.readOnly = true
+
+    $('.download-csv').click(()=>{
+        const annotations = anno.getAnnotations()
+        $.ajax({
+            type: "POST",
+            url: '/download_csv',
+            headers: {'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()},
+            data: {
+                img_id: {{ image.pk }},
+            },
+            success: function(data) {
+                downloadFile('smart-cow-annotations.csv', data)
+            }
+        })
+    })
+
+        
+    {% if annotations %}
+    anno.setAnnotations({{annotations|safe}})
+    createText()
+    {% endif %}
+    
+</script>
+
+
+{% else %}
+no images
+{% endif %}
+
+
+{% endblock %}

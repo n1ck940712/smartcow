@@ -1,0 +1,24 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}SmartCow Task | My Annotated{% endblock %}
+{% block body %}
+{% csrf_token %}
+{% load static %}
+<div class="container-fluid">
+    <h2>My Annotated</h2>
+    <hr>
+</div>
+{% if images %}
+<div class="container-fluid" style="margin-top: 10px;">
+    <div class="row">
+        {% for image in images %}
+            <div class="col-md-4">
+                {{ image.file_name }}
+                <a href="checkannotate/{{image.pk}}"><img src="{{ image.file.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" /></a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+no images
+{% endif %}
+{% endblock %}

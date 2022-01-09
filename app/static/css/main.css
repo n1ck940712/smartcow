@@ -1,0 +1,282 @@
+
+html,body{
+    max-height: 100vh;
+    height: 100%;
+    overflow: hidden;
+}
+.loginBody{
+    position: relative;
+    height: 100%;
+}
+
+.form-signin{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.indexRightContainer{
+    height: 85vh;
+    overflow: auto;
+}
+.transactionDivSub{
+    background-color: #9e9e9e;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+.filterContainer{
+    background-color: #9e9e9e;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+.transactionDivSubSub{
+    justify-content: space-between;
+    border-radius: 5px;
+    padding: 0px 8px 0px 8px;
+    margin: 5px;
+}
+.transactionDivSubTitle{
+    padding: 5px 13px 0px 6px;
+    font-weight: bolder;
+}
+.divExpense{
+    background-color: #bf7171;
+    color: #700000;
+    font-weight: bold;
+}
+.divTransfer{
+    background-color: #7172bf;
+    color: #020061;
+    font-weight: bold;
+}
+.divSystem{
+    background-color: #74757a;
+    font-weight: bold;
+
+}
+.divIncome{
+    background-color: #7bbf71;
+    color: #004f00;
+    font-weight: bold;
+}
+.tabContent{
+    padding:10px;
+    display: none;
+}
+
+.accountDiv{
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.selectedAccount{
+    background-color: #487542;
+    /* border: solid 2px green; */
+}
+
+.notSelectedAccount{
+    background-color: #7bbf71;
+}
+
+.summaryContainer{
+    background-color: #9e9e9e;
+    border-radius: 5px;
+    margin: 1vh;
+    padding: 5px;
+    height: 88vh;
+}
+.navbar{
+    min-height: 10vh;
+}
+
+.summaryContainerSub{
+    display: flex;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0px 5px 0px 5px;
+    justify-content: space-between;
+}
+
+.transContr{
+    background-color: #9e9e9e;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.transContrContSub{
+    /* background-color: #74757a; */
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.categoryContainer, .accountContainer, .exportCont{
+    margin: 1vh;
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #9e9e9e;
+}
+
+.loadingAnim{
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.loadingAnimSub{
+    opacity: 1;
+    margin: auto;
+    width: 200px;
+    top: 100px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px 5px 30px 5px;
+}
+
+.editEntryForm{
+    display: none;
+}
+
+.chartContainer{
+    background-color: #d1ddff;
+    border-radius: 5px;
+    margin: 1vh;
+    padding: 5px;
+    height: 88vh;
+}
+
+.categoryContainerHeader,
+.accountContainerHeader, 
+.exportContHeader{
+    justify-content: space-between;
+    padding: 0px 5px 0px 6px;
+    display:flex;
+}
+
+.categorySub,
+.accountSub{
+    justify-content: space-between;
+    display:flex;
+    background-color: #757575;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0px 0px 0px 8px;
+    margin: 5px;
+}
+
+hr{
+    margin: 5px 0px 5px 0px;
+    border-top: 1px solid black;
+}
+
+@media (max-width: 767px) {
+  body{
+    overflow: auto;
+  }
+  .indexRightContainer{
+    overflow: auto;
+  }
+
+}
+@media (max-width: 767px) {
+  .summaryContainer{
+    height: 100%;
+  }
+  .chartContainer{
+    height: 100%;
+  }
+}
+
+.alert{
+    position: absolute;
+    width: 100%;
+    z-index: 1200;
+}
+
+.form-signin{
+    border-radius: 10px;
+    background-color: white;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logoText{
+    margin-top: 45px;
+    font-size: 50px;
+    color: white;
+}
+
+
+.modal{
+    top: 5vh;
+}
+.modal-content{
+    border-radius: 10px;
+    
+}
+@media (min-width: 576px) {
+    .modal-dialog {
+      width: 400px; 
+    }
+}
+
+
+
+/* 5. CSS styles for the color selector widget */
+.colorselector-widget {
+    padding:5px;
+    border-bottom:1px solid #e5e5e5;
+  }
+  
+  .colorselector-widget button {
+    outline:none;
+    border:none;
+    display:inline-block;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    cursor:pointer;
+    opacity:0.5;
+    margin:4px;
+  }
+  
+  .colorselector-widget button.selected,
+  .colorselector-widget button:hover {
+    opacity:1;
+  }
+  
+  svg.a9s-annotationlayer .a9s-annotation .a9s-outer {
+    stroke:#00ff00;
+    stroke-width:3;
+  }
+
+  svg.a9s-annotationlayer .a9s-annotation.Car .a9s-inner,
+  svg.a9s-annotationlayer .a9s-annotation.Bus .a9s-inner,
+  svg.a9s-annotationlayer .a9s-annotation.Autorickshaw .a9s-inner,
+  svg.a9s-annotationlayer .a9s-annotation.Bike .a9s-inner {
+    fill:transparent;
+    stroke:none;
+  }
+
+  svg text{
+    font-size: 5vw;
+    font-weight: bold;
+    text-anchor: middle;
+  }
+
+  .container-fluid {
+      margin-top: 10px;
+  }
